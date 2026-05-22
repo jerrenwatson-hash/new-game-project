@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://drpcrmpxctdr5"]
+
+[ext_resource type="Texture2D" uid="uid://ybf36ljsroq6" path="res://assets/brackeys_platformer_assets/sprites/slime_green.png" id="1_p2gj0"]
+[ext_resource type="PackedScene" uid="uid://bq6f0yca2n1cx" path="res://scenes/killzone.tscn" id="2_n6pvg"]
+
+[sub_resource type="GDScript" id="GDScript_p2gj0"]
+script/source = "extends Node2D
+
+const speed = 60
+
+var direction=1
+@onready var ray_cast_right: RayCast2D = $RayCastRight
+@onready var ray_cast_left: RayCast2D = $RayCastLeft
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if  ray_cast_right. is_colliding():
+			direction=-1
+			animated_sprite. flip_h=true 
+	if ray_cast_left. is_colliding():
+			direction=1
+			animated_sprite. flip_h=false 
+
+	position.x +-direction * speed * delta
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjw23"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(0, 24, 23, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2npkn"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(24, 24, 23, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fd6lc"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(48, 24, 23, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gstla"]
+atlas = ExtResource("1_p2gj0")
+region = Rect2(72, 24, 23, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v5wyi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjw23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2npkn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fd6lc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gstla")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l8pv"]
+size = Vector2(12, 11)
+
+[node name="Slime" type="Node2D" unique_id=1241579094]
+script = SubResource("GDScript_p2gj0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1867525382]
+position = Vector2(-0.5, -6)
+sprite_frames = SubResource("SpriteFrames_v5wyi")
+autoplay = "default"
+frame = 2
+frame_progress = 0.28747553
+
+[node name="Killzone" parent="." unique_id=1817342740 instance=ExtResource("2_n6pvg")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone" unique_id=95970284]
+shape = SubResource("RectangleShape2D_0l8pv")
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=2104260190]
+target_position = Vector2(10, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=311163123]
+target_position = Vector2(-10, 0)
