@@ -18,23 +18,32 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("move left ","move right")
+	# Get the input
 	
+	var direction := Input.get_axis("move left ","move right")
+	move_and_slide()
 	#flip the sprite
 	if direction < 0:
-			animated_sprite.flip_h=false
+			animated_sprite.flip_h=true
 
 	elif direction > 0:
-			animated_sprite.flip_h=true
+			animated_sprite.flip_h=false
 	# Apply movement 
 	
 	if direction:
 		velocity.x =  direction * SPEED
 	else:
 		velocity.x = 0 
-	move_and_slide()
+
+	if is_on_floor():
+		if direction== 0:
+			animated_sprite.play("idle")
+		else:
+			animated_sprite.play("run")
+	else:
+		animated_sprite.play("jump")
+
+
 
 
 func _on_coin_body_entered(body: Node2D) -> void:

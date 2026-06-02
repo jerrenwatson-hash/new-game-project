@@ -14,6 +14,14 @@ config/name="Watsonjerrenfirstgame_project"
 run/main_scene="uid://bm0fvvofh767x"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
+[audio]
+
+buses/default_bus_layout="uid://c510uir2kgce3"
+
+[autoload]
+
+Music="*uid://dmllm51jag2m8"
+
 [file_customization]
 
 folder_colors={
