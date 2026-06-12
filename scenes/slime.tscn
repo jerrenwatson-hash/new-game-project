@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ybf36ljsroq6" path="res://assets/brackeys_platformer_assets/sprites/slime_green.png" id="1_p2gj0"]
 [ext_resource type="PackedScene" uid="uid://bq6f0yca2n1cx" path="res://scenes/killzone.tscn" id="2_n6pvg"]
+[ext_resource type="Script" uid="uid://db7vxraapxqet" path="res://scenes/gummbahead.gd" id="3_n6pvg"]
 
 [sub_resource type="GDScript" id="GDScript_p2gj0"]
 script/source = "extends Node2D
@@ -66,6 +67,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0l8pv"]
 size = Vector2(12, 11)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pjw23"]
+size = Vector2(14, 9)
+
 [node name="Slime" type="Node2D" unique_id=1241579094]
 script = SubResource("GDScript_p2gj0")
 
@@ -86,3 +90,14 @@ target_position = Vector2(10, 0)
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=311163123]
 target_position = Vector2(-10, 0)
+
+[node name="gummbahead" type="Area2D" parent="." unique_id=1759996085]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("3_n6pvg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="gummbahead" unique_id=1160567245]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_pjw23")
+
+[connection signal="body_entered" from="gummbahead" to="gummbahead" method="_on_body_entered"]
